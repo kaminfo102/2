@@ -143,6 +143,12 @@ export default function Home() {
             شروع ثبت نام
           </Link>
         </div>
+        <Link
+            href="/students"
+            className="inline-block bg-[#ffd700] text-[#1a472a] px-6 md:px-8 py-3 md:py-4 rounded-xl text-base md:text-lg font-bold hover:bg-[#ffd700]/90 transition-colors"
+          >
+            لیست فراگیران          
+        </Link>
       </section>
     </main>
   );

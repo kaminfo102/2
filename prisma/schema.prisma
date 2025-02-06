@@ -18,6 +18,7 @@ model Registration {
   emergencyNumber String
   profileImage    String
   receipts        String[]
+  is_paid         Boolean
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 }

@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl">
       <body>
-        <header className="w-full flex justify-center py-6">
+        <header className="w-full flex justify-center py-6" style={{ backgroundColor: '#1a472a' }}>
           <Link href="/">
             <Image
               src="/images/logo.png"

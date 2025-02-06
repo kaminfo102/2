@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { formatPersianDate } from '@/lib/utils/date';
 import { Dialog } from '@/components/ui/dialog';
@@ -23,10 +23,10 @@ interface Student {
   city: string;
   level: string;
   mobileNumber: string;
-  emergencyNumber: string;
-  profileImage: string;
   receipts: string[];
   createdAt: string;
+  profileImage: string;
+  isPaid: boolean;
 }
 
 export default function StudentsPage() {
@@ -34,14 +34,15 @@ export default function StudentsPage() {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedReceipts, setSelectedReceipts] = useState<string[]>([]);
-
-  useEffect(() => {
-    fetchStudents();
-  }, []);
-
-  const fetchStudents = async () => {
+  const [selectedReceiptType, setSelectedReceiptType] = useState<'image' | 'file' | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  
+  const fetchStudents = useCallback(async () => {
     try {
       const response = await fetch('/api/students');
+      if (!response.ok) {
+        throw new Error('خطا در واکشی اطلاعات');
+      }
       const data = await response.json();
       setStudents(data);
     } catch (error) {
@@ -49,7 +50,28 @@ export default function StudentsPage() {
     } finally {
       setLoading(false);
     }
+  }, []);
+
+  useEffect(() => {
+    fetchStudents();
+  }, [fetchStudents]);
+
+  const handleCheckboxChange = (id: string) => {
+    setStudents((prevStudents) =>
+      prevStudents.map((student) =>
+        student.id === id ? { ...student, isPaid: !student.isPaid } : student
+      )
+    );
   };
+
+  const filteredStudents = students.filter((student) =>
+    student.fullName.includes(searchQuery) ||
+    student.nationalId.includes(searchQuery) ||
+    student.mobileNumber.includes(searchQuery)
+  );
+
+  const totalCount = filteredStudents.length;
+  const paidCount = filteredStudents.filter(student => student.isPaid).length;
 
   if (loading) {
     return (
@@ -60,39 +82,50 @@ export default function StudentsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#1a472a] p-6">
-      <div className="max-w-7xl mx-auto bg-white/90 backdrop-blur-lg rounded-3xl shadow-xl p-6">
+    <div className="min-h-screen bg-[#1a472a] p-6 flex flex-col items-center">
+      <div className="max-w-7xl w-full bg-white/90 backdrop-blur-lg rounded-3xl shadow-xl p-6">
         <h1 className="text-3xl font-bold text-center mb-8 text-[#1a472a]">لیست فراگیران</h1>
-        
-        <div className="overflow-x-auto">
+
+        <input
+          type="text"
+          placeholder="جستجو بر اساس نام، کد ملی یا شماره تماس..."
+          className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+
+        {/* بخش اسکرول داخلی جدول */}
+        <div className="overflow-auto max-h-[500px] w-full">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="text-right">تصویر</TableHead>
-                <TableHead className="text-right">نام و نام خانوادگی</TableHead>
-                <TableHead className="text-right">کد ملی</TableHead>
-                <TableHead className="text-right">تاریخ تولد</TableHead>
-                <TableHead className="text-right">شهر</TableHead>
-                <TableHead className="text-right">سطح</TableHead>
-                <TableHead className="text-right">شماره تماس</TableHead>
-                <TableHead className="text-right">رسیدها</TableHead>
-                <TableHead className="text-right">تاریخ ثبت نام</TableHead>
+                <TableCell as="th" className="text-right">#</TableCell>
+                <TableCell as="th" className="text-right">تصویر</TableCell>
+                <TableCell as="th" className="text-right">نام و نام خانوادگی</TableCell>
+                <TableCell as="th" className="text-right">کد ملی</TableCell>
+                <TableCell as="th" className="text-right">تاریخ تولد</TableCell>
+                <TableCell as="th" className="text-right">شهر</TableCell>
+                <TableCell as="th" className="text-right">سطح</TableCell>
+                <TableCell as="th" className="text-right">شماره تماس</TableCell>
+                <TableCell as="th" className="text-right">رسیدها</TableCell>
+                <TableCell as="th" className="text-right">تاریخ ثبت نام</TableCell>
+                <TableCell as="th" className="text-right">وضعیت پرداخت</TableCell>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {students.map((student) => (
-                <TableRow key={student.id}>
+              {filteredStudents.map((student, index) => (
+                <TableRow key={student.id} className={student.isPaid ? 'bg-green-200' : ''}>
+                  <TableCell>{index + 1}</TableCell>
                   <TableCell>
-                    <div 
+                    <div
                       className="relative w-12 h-12 rounded-full overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
-                      onClick={() => setSelectedImage(student.profileImage)}
+                      onClick={() => { 
+                        setSelectedImage(student.profileImage);
+                        const firstImage = student.profileImage;
+                        window.open(firstImage, '_blank');
+                      }}
                     >
-                      <Image
-                        src={student.profileImage}
-                        alt={student.fullName}
-                        fill
-                        className="object-cover"
-                      />
+                      <Image src={student.profileImage} alt={`تصویر ${student.fullName}`} width={48} height={48} className="object-cover" />
                     </div>
                   </TableCell>
                   <TableCell className="font-medium">{student.fullName}</TableCell>
@@ -105,84 +138,42 @@ export default function StudentsPage() {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => setSelectedReceipts(student.receipts)}
+                      onClick={() => {
+                        setSelectedReceipts(student.receipts);
+                        const firstReceipt = student.receipts[0];
+                        if (firstReceipt.endsWith('.jpg') || firstReceipt.endsWith('.png')) {
+                          setSelectedReceiptType('image');
+                        } else {
+                          setSelectedReceiptType('file');
+                          window.open(firstReceipt, '_blank');
+                        }
+                      }}
                     >
                       <Eye className="w-4 h-4 ml-2" />
-                      مشاهده
+                      نمایش
                     </Button>
                   </TableCell>
                   <TableCell>{formatPersianDate(student.createdAt)}</TableCell>
+                  <TableCell>
+                    <input
+                      type="checkbox"
+                      checked={student.isPaid}
+                      onChange={() => handleCheckboxChange(student.id)}
+                      className="cursor-pointer"
+                    />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </div>
 
-        {/* Modal for Profile Image */}
-        <Dialog
-          open={!!selectedImage}
-          onOpenChange={() => setSelectedImage(null)}
-        >
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4">
-            <div className="relative bg-white rounded-2xl p-4 max-w-2xl w-full">
-              <button
-                onClick={() => setSelectedImage(null)}
-                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
-              >
-                ✕
-              </button>
-              {selectedImage && (
-                <div className="relative w-full h-[500px]">
-                  <Image
-                    src={selectedImage}
-                    alt="تصویر پروفایل"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-        </Dialog>
-
-        {/* Modal for Receipts */}
-        <Dialog
-          open={selectedReceipts.length > 0}
-          onOpenChange={() => setSelectedReceipts([])}
-        >
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4">
-            <div className="relative bg-white rounded-2xl p-4 max-w-2xl w-full">
-              <button
-                onClick={() => setSelectedReceipts([])}
-                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
-              >
-                ✕
-              </button>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-                {selectedReceipts.map((receipt, index) => (
-                  <div key={index} className="relative">
-                    <div className="relative w-full h-[300px]">
-                      <Image
-                        src={receipt}
-                        alt={`رسید ${index + 1}`}
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <a
-                      href={receipt}
-                      download
-                      className="absolute bottom-4 right-4 bg-primary text-white p-2 rounded-full hover:bg-primary/90"
-                    >
-                      <Download className="w-5 h-5" />
-                    </a>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </Dialog>
+        {/* فوتر ثابت خارج از اسکرول جدول */}
+        <div className="mt-4 text-center font-bold">
+          تعداد کل دانش‌آموزان: {totalCount} - تعداد پرداختی: {paidCount}
+        </div>
       </div>
+      
     </div>
   );
 }
