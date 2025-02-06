@@ -63,6 +63,7 @@ const RegistrationForm = () => {
       formData.append('level', data.level?.toString() || '1');
       formData.append('mobileNumber', data.mobileNumber);
       formData.append('emergencyNumber', data.emergencyNumber || '');
+      formData.append('is_paid', String(data.is_paid || false));
       
       if (files[0]) {
         formData.append('profileImage', files[0]);
@@ -306,6 +307,7 @@ const RegistrationForm = () => {
         beadCount={steps.length}
         beadColor="#3b82f6"
         trackColor="#e2e8f0"
+        className='mb-6'
       />
       <form className="relative min-h-[400px]">
         <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>

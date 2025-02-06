@@ -141,6 +141,7 @@ export async function POST(request: Request) {
         emergencyNumber: formData.get('emergencyNumber') as string,
         profileImage: profileImagePath,
         receipts: receiptPaths,
+        is_paid: false,
       },
     });
 

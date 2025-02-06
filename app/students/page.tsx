@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Eye, Download } from 'lucide-react';
+import Link from 'next/link';
 
 interface Student {
   id: string;
@@ -85,6 +86,14 @@ export default function StudentsPage() {
     <div className="min-h-screen bg-[#1a472a] p-6 flex flex-col items-center">
       <div className="max-w-7xl w-full bg-white/90 backdrop-blur-lg rounded-3xl shadow-xl p-6">
         <h1 className="text-3xl font-bold text-center mb-8 text-[#1a472a]">لیست فراگیران</h1>
+        <div className='flex justify-center rounded-lg mb-3'>
+        <Link
+            href="/register"
+            className="inline-block bg-[#ffd700] text-[#1a472a] px-6 md:px-8 py-3 md:py-4 rounded-xl text-base md:text-lg font-bold hover:bg-[#ffd700]/90 transition-colors"
+          >
+            ثبت فراگیر جدید          
+        </Link>
+        </div>
 
         <input
           type="text"
@@ -99,17 +108,17 @@ export default function StudentsPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableCell as="th" className="text-right">#</TableCell>
-                <TableCell as="th" className="text-right">تصویر</TableCell>
-                <TableCell as="th" className="text-right">نام و نام خانوادگی</TableCell>
-                <TableCell as="th" className="text-right">کد ملی</TableCell>
-                <TableCell as="th" className="text-right">تاریخ تولد</TableCell>
-                <TableCell as="th" className="text-right">شهر</TableCell>
-                <TableCell as="th" className="text-right">سطح</TableCell>
-                <TableCell as="th" className="text-right">شماره تماس</TableCell>
-                <TableCell as="th" className="text-right">رسیدها</TableCell>
-                <TableCell as="th" className="text-right">تاریخ ثبت نام</TableCell>
-                <TableCell as="th" className="text-right">وضعیت پرداخت</TableCell>
+                <TableHead className="text-right">#</TableHead>
+                <TableHead className="text-right">تصویر</TableHead>
+                <TableHead className="text-right">نام و نام خانوادگی</TableHead>
+                <TableHead className="text-right">کد ملی</TableHead>
+                <TableHead className="text-right">تاریخ تولد</TableHead>
+                <TableHead className="text-right">شهر</TableHead>
+                <TableHead className="text-right">سطح</TableHead>
+                <TableHead className="text-right">شماره تماس</TableHead>
+                <TableHead className="text-right">رسیدها</TableHead>
+                <TableHead className="text-right">تاریخ ثبت نام</TableHead>
+                <TableHead className="text-right">وضعیت پرداخت</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

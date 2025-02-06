@@ -1,91 +1,163 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Calendar, Users, BookOpen, Award } from 'lucide-react';
+import { 
+  Calculator, 
+  BrainCircuit as Brain,
+  Cpu, 
+  ChevronRight, 
+  Code, 
+  Lightbulb,
+  Microscope,
+  GraduationCap,
+  CircuitBoard,
+  FlaskConical
+} from 'lucide-react';
 
 const events = [
   {
     id: 1,
-    title: 'دوره پیشرفته برنامه‌نویسی',
+    title: 'دوره پیشرفته محاسبات ذهنی',
     date: '۱۴۰۳/۰۱/۱۵',
-    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97',
-    description: 'دوره جامع و پیشرفته برنامه‌نویسی با جدیدترین تکنولوژی‌ها',
+    image: 'https://images.unsplash.com/photo-1596495578065-6e0763fa1178',
+    description: 'تقویت مهارت‌های محاسباتی و تفکر منطقی',
   },
   {
     id: 2,
-    title: 'کارگاه هوش مصنوعی',
+    title: 'کارگاه رباتیک مقدماتی',
     date: '۱۴۰۳/۰۲/۰۱',
-    image: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c',
-    description: 'آشنایی با مفاهیم پایه و پیشرفته هوش مصنوعی',
+    image: 'https://images.unsplash.com/photo-1561557944-6e7860d1a7eb',
+    description: 'آشنایی با مفاهیم پایه رباتیک و ساخت ربات',
   },
   {
     id: 3,
-    title: 'سمینار امنیت سایبری',
+    title: 'المپیاد محاسبات سریع',
     date: '۱۴۰۳/۰۲/۱۵',
-    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b',
-    description: 'بررسی چالش‌های امنیتی در دنیای دیجیتال',
+    image: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb',
+    description: 'مسابقه محاسبات ذهنی و چرتکه',
   },
 ];
 
 const steps = [
   {
-    icon: Users,
-    title: 'ثبت نام اولیه',
-    description: 'وارد کردن اطلاعات شخصی و تکمیل فرم',
+    icon: Brain,
+    title: 'ارزیابی سطح',
+    description: 'تعیین سطح اولیه دانش‌آموز',
   },
   {
-    icon: Calendar,
+    icon: Calculator,
     title: 'انتخاب دوره',
-    description: 'انتخاب دوره مورد نظر و سطح آموزشی',
+    description: 'انتخاب دوره متناسب با سطح',
   },
   {
-    icon: BookOpen,
-    title: 'پرداخت شهریه',
-    description: 'پرداخت آنلاین و آپلود رسید پرداخت',
+    icon: GraduationCap,
+    title: 'ثبت نام',
+    description: 'تکمیل فرم و پرداخت شهریه',
   },
   {
-    icon: Award,
-    title: 'تأیید نهایی',
-    description: 'بررسی مدارک و تأیید ثبت نام',
+    icon: FlaskConical,
+    title: 'شروع آموزش',
+    description: 'آغاز دوره و دریافت محتوا',
+  },
+];
+
+const features = [
+  {
+    icon: Brain,
+    title: 'تقویت حافظه',
+    description: 'افزایش قدرت حافظه و تمرکز',
+  },
+  {
+    icon: Calculator,
+    title: 'محاسبات سریع',
+    description: 'یادگیری تکنیک‌های محاسبه سریع',
+  },
+  {
+    icon: CircuitBoard,
+    title: 'رباتیک',
+    description: 'آموزش ساخت و برنامه‌نویسی ربات',
+  },
+  {
+    icon: Cpu,
+    title: 'هوش مصنوعی',
+    description: 'آشنایی با مفاهیم هوش مصنوعی',
+  },
+  {
+    icon: Code,
+    title: 'برنامه‌نویسی',
+    description: 'آموزش اصول برنامه‌نویسی',
+  },
+  {
+    icon: Lightbulb,
+    title: 'خلاقیت',
+    description: 'پرورش تفکر خلاق',
   },
 ];
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#1a472a]">
+      {/* Decorative Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 right-20 w-64 h-64 bg-[#ffd700]/10 rounded-full blur-3xl animate-float-slow" />
+        <div className="absolute bottom-40 left-20 w-48 h-48 bg-[#ffd700]/15 rounded-full blur-2xl animate-float-medium" />
+        <div className="absolute top-1/2 right-1/3 w-32 h-32 bg-[#ffd700]/20 rounded-full blur-xl animate-float-fast" />
+        
+        {/* Mathematical Symbols */}
+        <div className="absolute top-40 left-1/4 text-[#ffd700]/20 text-6xl font-bold transform rotate-12">∑</div>
+        <div className="absolute bottom-1/3 right-1/4 text-[#ffd700]/20 text-7xl font-bold transform -rotate-15">π</div>
+        <div className="absolute top-2/3 left-1/3 text-[#ffd700]/20 text-5xl font-bold transform rotate-45">∞</div>
+      </div>
+
       {/* Hero Section */}
       <section className="relative min-h-[600px] md:h-[600px] overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97"
+            src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb"
             alt="Hero"
             fill
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-[#1a472a]/80" />
         </div>
         <div className="relative h-full max-w-7xl mx-auto px-4 py-20 md:py-0 flex items-center">
           <div className="text-white max-w-2xl">
-            <h1 className="text-3xl md:text-5xl font-bold mb-6">مرکز آموزش تخصصی</h1>
-            <p className="text-lg md:text-xl mb-8">با ما مسیر موفقیت خود را بسازید</p>
+            <h1 className="text-3xl md:text-5xl font-bold mb-6">مرکز تخصصی محاسبات ذهنی و رباتیک</h1>
+            <p className="text-lg md:text-xl mb-8">با ما مسیر موفقیت خود را در دنیای محاسبات و تکنولوژی بسازید</p>
             <Link
               href="/register"
               className="inline-block bg-[#ffd700] text-[#1a472a] px-6 md:px-8 py-3 md:py-4 rounded-xl text-base md:text-lg font-bold hover:bg-[#ffd700]/90 transition-colors"
             >
-              ثبت نام دوره‌ها
+              شروع ثبت نام
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Events Section */}
-      <section className="py-12 md:py-20 px-4">
+      {/* Features Grid */}
+      <section className="py-16 px-4 relative">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-8 md:mb-12">رویدادهای پیش رو</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-12">ویژگی‌های دوره‌های ما</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <div key={index} className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl hover:transform hover:scale-105 transition-all">
+                <feature.icon className="w-12 h-12 text-[#ffd700] mb-4" />
+                <h3 className="text-xl font-bold text-white mb-2">{feature.title}</h3>
+                <p className="text-white/80">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Events Section */}
+      <section className="py-16 px-4">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-12">رویدادهای پیش رو</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {events.map((event) => (
-              <div key={event.id} className="bg-white rounded-2xl overflow-hidden shadow-xl transform hover:-translate-y-2 transition-transform">
-                <div className="relative h-48 md:h-56">
+              <div key={event.id} className="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden transform hover:-translate-y-2 transition-all">
+                <div className="relative h-48">
                   <Image
                     src={event.image}
                     alt={event.title}
@@ -93,15 +165,14 @@ export default function Home() {
                     className="object-cover"
                   />
                 </div>
-                <div className="p-4 md:p-6">
-                  <h3 className="text-lg md:text-xl font-bold mb-2">{event.title}</h3>
-                  <p className="text-gray-600 text-sm md:text-base mb-4">{event.description}</p>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-white mb-2">{event.title}</h3>
+                  <p className="text-white/80 mb-4">{event.description}</p>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-500">
-                      {event.date}
-                    </span>
-                    <button className="text-primary hover:text-primary/80 text-sm md:text-base">
+                    <span className="text-[#ffd700]">{event.date}</span>
+                    <button className="text-[#ffd700] hover:text-[#ffd700]/80 flex items-center">
                       اطلاعات بیشتر
+                      <ChevronRight className="w-5 h-5 mr-1" />
                     </button>
                   </div>
                 </div>
@@ -111,18 +182,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Registration Steps */}
-      <section className="py-12 md:py-20 px-4 bg-[#ffd700]/10">
+      {/* Steps Section */}
+      <section className="py-16 px-4 bg-[#ffd700]/5">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-8 md:mb-12">مراحل ثبت نام</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-12">مراحل شروع</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {steps.map((step, index) => (
-              <div key={index} className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 md:p-6 text-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <step.icon className="w-6 h-6 md:w-8 md:h-8 text-primary" />
+              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center transform hover:scale-105 transition-all">
+                <div className="w-16 h-16 bg-[#ffd700]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <step.icon className="w-8 h-8 text-[#ffd700]" />
                 </div>
-                <h3 className="text-lg md:text-xl font-bold mb-2">{step.title}</h3>
-                <p className="text-gray-600 text-sm md:text-base">{step.description}</p>
+                <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
+                <p className="text-white/80">{step.description}</p>
               </div>
             ))}
           </div>
@@ -130,25 +201,19 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-12 md:py-20 px-4">
+      <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 md:mb-6">آماده شروع هستید؟</h2>
-          <p className="text-lg md:text-xl text-white/80 mb-6 md:mb-8">
-            همین حالا ثبت نام کنید و مسیر موفقیت خود را آغاز کنید
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">آماده شروع هستید؟</h2>
+          <p className="text-lg md:text-xl text-white/80 mb-8">
+            همین حالا ثبت نام کنید و مسیر موفقیت خود را در دنیای محاسبات و تکنولوژی آغاز کنید
           </p>
           <Link
             href="/register"
-            className="inline-block bg-[#ffd700] text-[#1a472a] px-6 md:px-8 py-3 md:py-4 rounded-xl text-base md:text-lg font-bold hover:bg-[#ffd700]/90 transition-colors"
+            className="inline-block bg-[#ffd700] text-[#1a472a] px-8 py-4 rounded-xl text-lg font-bold hover:bg-[#ffd700]/90 transition-colors"
           >
             شروع ثبت نام
           </Link>
         </div>
-        <Link
-            href="/students"
-            className="inline-block bg-[#ffd700] text-[#1a472a] px-6 md:px-8 py-3 md:py-4 rounded-xl text-base md:text-lg font-bold hover:bg-[#ffd700]/90 transition-colors"
-          >
-            لیست فراگیران          
-        </Link>
       </section>
     </main>
   );

@@ -26,4 +26,5 @@ export const steps = [
   { field: 'mobileNumber', icon: Phone, label: 'شماره همراه' },
   { field: 'profileImage', icon: Camera, label: 'تصویر فراگیر' },
   { field: 'receipts', icon: Receipt, label: 'رسید پرداخت' },
+
 ];

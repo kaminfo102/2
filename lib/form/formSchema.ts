@@ -13,6 +13,7 @@ export const formSchema = z.object({
   emergencyNumber: z.string().regex(/^\d{11}$/, 'شماره تلفن معتبر نیست').optional(),
   profileImage: z.string().optional(),
   receipts: z.array(z.string()).optional(),
+  is_paid: z.boolean().optional(),
 });
 
 // تعریف تایپ داده فرم بر اساس اسکیما
