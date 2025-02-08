@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, ButtonHTMLAttributes } from 'react';
+import { DateObject } from "react-multi-date-picker";
 import { motion, AnimatePresence } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -156,8 +157,9 @@ const RegistrationForm = () => {
     // فیلدهای اجباری فرم
     const requiredFields = ['fullName', 'nationalId', 'birthDate', 'city', 'mobileNumber'];
     // در صورتی که فیلد اجباری و مقدار آن خالی یا نامعتبر باشد، دکمه بعدی غیرفعال می‌شود.
-    const disableNext = requiredFields.includes(step.field) && (!currentValue || (step.field in errors && errors[step.field as keyof FormData]));
-
+    
+    const disableNext = requiredFields.includes(step.field) && (!currentValue || errors[step.field as keyof FormData]);
+    
     return (
       <motion.div
         key={currentStep}
@@ -202,6 +204,8 @@ const RegistrationForm = () => {
               placeholder="انتخاب تاریخ تولد"
             />
           </div>
+
+      
         )}
         {step.field === 'city' && (
           <select {...register('city')} className="form-input">
